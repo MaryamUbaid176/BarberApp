@@ -1,3 +1,4 @@
+rnf
 import React, { useState } from "react";
 import { View, TextInput } from "react-native";
 import {
@@ -16,7 +17,7 @@ const Login = ({ navigation }) => {
       {/* first heading */}
       <View
         style={{
-          height: hp(30),
+          height: hp(40),
           backgroundColor: "transparent",
           justifyContent: "center",
         }}
@@ -70,13 +71,13 @@ const Login = ({ navigation }) => {
         />
       </View>
 
-      <View style={{ height: hp(15), backgroundColor: "transparent" }}>
+      <View style={{ height: hp(5), backgroundColor: "transparent" }}>
         <CustomButton
           onPress={() => navigation.navigate("ForgotPassword")}
           style={{
             backgroundColor: "transparent",
             width: wp(50),
-            height: hp(4),
+            height: hp(5),
             fontSize: hp(5),
             fontWeight: "bold",
             marginLeft: hp(25),
@@ -86,7 +87,7 @@ const Login = ({ navigation }) => {
         />
       </View>
 
-      <View style={{ height: wp(10), backgroundColor: "transparent" }}>
+      <View style={{ height: hp(10), backgroundColor: "transparent" }}>
         <CustomButton
           onPress={() => navigation.navigate("ForgotPassword")}
           style={{
@@ -105,13 +106,10 @@ const Login = ({ navigation }) => {
       {/* tibb */}
       <View
         style={{
-          marginTop: hp(5),
-          height: hp(8),
-          width: wp("80%"),
+          height: hp(25),
           flexDirection: "row",
           backgroundColor: "transparent",
           alignItems: "center",
-          marginLeft: "10%",
           justifyContent: "center",
         }}
       >
@@ -119,7 +117,7 @@ const Login = ({ navigation }) => {
           onPress={() => navigation.navigate("ForgotPassword")}
           style={{
             width: wp(55),
-            marginTop: wp(25),
+            marginTop: wp(45),
             marginBottom: hp(15),
             fontWeight: "bold",
             justifyContent: "center",
@@ -133,12 +131,12 @@ const Login = ({ navigation }) => {
         />
 
         <CustomButton
-          onPress={() => navigation.navigate("SignUp")}
+          onPress={() => navigation.navigate("ForgotPassword")}
           style={{
-            marginBottom: hp(5),
+            marginBottom: hp(15),
 
             width: wp(20),
-            marginTop: wp(8),
+            marginTop: wp(45),
             borderRadius: wp(2),
             justifyContent: "center",
             alignItems: "center",
