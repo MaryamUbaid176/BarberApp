@@ -11,7 +11,10 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../../redux/slices/userSlice";
 const Mystore = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <View style={{ height: hp(100), backgroundColor: "tranparent" }}>
       <View style={styles.headerView}>
@@ -24,7 +27,10 @@ const Mystore = ({ navigation }) => {
         <Text style={styles.titleText}>Maryam@gmail.com</Text>
       </View>
 
-      <TouchableOpacity style={styles.logOutBtn}>
+      <TouchableOpacity
+        onPress={() => dispatch(logOut())}
+        style={styles.logOutBtn}
+      >
         <Text style={{ marginTop: hp(3), fontWeight: "bold" }}>Logout</Text>
       </TouchableOpacity>
       {/* <View style={{ height: wp(20), backgroundColor: "green" }}>

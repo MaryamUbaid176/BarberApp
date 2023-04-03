@@ -5,9 +5,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import Text from "../../../components/CustomText";
 import CustomButton from "../../../components/CustomButton";
-import Login from "../Login";
+import Text from "../../../components/CustomText";
 const SelectUser = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
@@ -29,7 +28,6 @@ const SelectUser = ({ navigation }) => {
 
         <LottieView
           style={{ flex: 1 }}
-          // source={require('./Assets/lottie/122850-office-chair.json')}
           source={require("../../../Assets/lottie/88425-multiple-spinning-dotted-rings-loading.json")}
           autoPlay
           loop
@@ -46,7 +44,7 @@ const SelectUser = ({ navigation }) => {
       >
         <CustomButton
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.navigate("Login", { type: "user" });
           }}
           style={{
             backgroundColor: "#2AAA8A",
@@ -59,12 +57,12 @@ const SelectUser = ({ navigation }) => {
             alignSelf: "center",
             borderTopRadius: hp(20),
           }}
-          title="As a    User"
+          title="As a User"
           titleColor={{ color: "#FFF" }}
         />
         <CustomButton
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.navigate("Login", { type: "barber" });
           }}
           style={{
             backgroundColor: "#2AAA8A",

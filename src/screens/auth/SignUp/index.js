@@ -1,4 +1,3 @@
-rnf
 import React, { useState } from "react";
 import { View, TextInput } from "react-native";
 import {
@@ -9,12 +8,14 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Text from "../../../components/CustomText";
 import CustomButton from "../../../components/CustomButton";
 
-const Login = ({ navigation }) => {
+const Login = (props) => {
+  console.log("props::", props);
+  const [Email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
   return (
     <KeyboardAwareScrollView
       style={{ height: hp(100), backgroundColor: "transparent" }}
     >
-      {/* first heading */}
       <View
         style={{
           height: hp(40),
@@ -33,7 +34,7 @@ const Login = ({ navigation }) => {
         >
           Welcome Back!
         </Text>
-        {/* second heading */}
+
         <Text
           style={{
             fontSize: wp(3),
@@ -50,6 +51,7 @@ const Login = ({ navigation }) => {
       <View style={{ height: hp(20), backgroundColor: "transparent" }}>
         <TextInput
           placeholder="Email"
+          onChangeText={(e) => setEmail(e)}
           style={{
             borderRadius: 20,
             borderWidth: 0.5,
@@ -61,6 +63,7 @@ const Login = ({ navigation }) => {
 
         <TextInput
           placeholder="Password"
+          onChangeText={(e) => setPass(e)}
           style={{
             borderWidth: 0.5,
             borderRadius: 20,
@@ -73,7 +76,7 @@ const Login = ({ navigation }) => {
 
       <View style={{ height: hp(5), backgroundColor: "transparent" }}>
         <CustomButton
-          onPress={() => navigation.navigate("ForgotPassword")}
+          onPress={() => props.navigation.navigate("ForgotPassword")}
           style={{
             backgroundColor: "transparent",
             width: wp(50),
@@ -89,7 +92,7 @@ const Login = ({ navigation }) => {
 
       <View style={{ height: hp(10), backgroundColor: "transparent" }}>
         <CustomButton
-          onPress={() => navigation.navigate("ForgotPassword")}
+          onPress={() => props.navigation.navigate("ForgotPassword")}
           style={{
             borderRadius: 20,
             backgroundColor: "#2AAA8A",
@@ -114,7 +117,7 @@ const Login = ({ navigation }) => {
         }}
       >
         <CustomButton
-          onPress={() => navigation.navigate("ForgotPassword")}
+          onPress={() => props.navigation.navigate("ForgotPassword")}
           style={{
             width: wp(55),
             marginTop: wp(45),
@@ -131,7 +134,7 @@ const Login = ({ navigation }) => {
         />
 
         <CustomButton
-          onPress={() => navigation.navigate("ForgotPassword")}
+          onPress={() => props.navigation.navigate("ForgotPassword")}
           style={{
             marginBottom: hp(15),
 
@@ -206,7 +209,7 @@ marginTop: 12, width: '90%' }} />
   
     
        <CustomButton
-         onPress={()=>navigation.navigate('ForgotPassword')}
+         onPress={()=>props.navigation.navigate('ForgotPassword')}
  
          style={{
         
@@ -228,7 +231,7 @@ marginTop: 12, width: '90%' }} />
     />
 
     <CustomButton
-     onPress={()=>navigation.navigate('ForgotPassword')}
+     onPress={()=>props.navigation.navigate('ForgotPassword')}
          style={{
             marginBottom:hp(15),
            

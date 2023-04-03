@@ -1,4 +1,4 @@
-package com.haircut.newarchitecture;
+package com.barberia.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.haircut.BuildConfig;
-import com.haircut.newarchitecture.components.MainComponentsRegistry;
-import com.haircut.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.barberia.BuildConfig;
+import com.barberia.newarchitecture.components.MainComponentsRegistry;
+import com.barberia.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

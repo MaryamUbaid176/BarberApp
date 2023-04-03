@@ -1,17 +1,20 @@
-// // In App.js in a new project
+// // In MainApp.js in a new project
 
-// import * as React from 'react';
 // import {LogBox} from 'react-native';
 // import {NavigationContainer} from '@react-navigation/native';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import SelectUser from './screens/auth/UserType/SelectUser';
+import { Provider, useSelector } from "react-redux";
 import Login from "./screens/auth/Login";
 
 // // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import ForgotPassword from "./screens/auth/ForgotPassword";
+import SignUp from "./screens/auth/SignUp";
 import SplashScreen from "./screens/auth/SplashScreen";
 import SelectUser from "./screens/auth/UserType/SelectUser";
-import ForgotPassword from "./screens/auth/ForgotPassword";
 import Home from "./screens/dashboard/Home";
+
+import { store } from "./Redux/store";
 // import Profile from "./screens/dashboard/Profile";
 
 // const Stack = createNativeStackNavigator();
@@ -27,7 +30,7 @@ import Home from "./screens/dashboard/Home";
 //   );
 // };
 
-// function App() {
+// function MainApp() {
 //   LogBox.ignoreAllLogs();
 //   return (
 //     <NavigationContainer>
@@ -97,17 +100,16 @@ import Home from "./screens/dashboard/Home";
 //   );
 // }
 
-// export default App;
-import CusHome from "./screens/Customer/CusHome";
+// export default MainApp;
+// import CusHome from "./screens/Customer/";
 
-import * as React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as React from "react";
+import Booking from "./screens/Customer/Booking";
 import Account from "./screens/dashboard/Account";
 import Mystore from "./screens/dashboard/My store";
 import AddProduct from "./screens/dashboard/My store/AddProduct";
-import Booking from "./screens/Customer/Booking";
 
 const Stack = createNativeStackNavigator();
 const AuthStack = () => {
@@ -116,6 +118,7 @@ const AuthStack = () => {
       <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="SelectUser" component={SelectUser} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       </Stack.Navigator>
@@ -157,18 +160,18 @@ const HomeStack = () => {
 const CustomerStack = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="CusHome">
-        <Stack.Screen name="CusHome" component={CusHome} />
+      <Stack.Navigator initialRouteName="HomeStack">
+        <Stack.Screen name="" component={Booking} />
         <Stack.Screen name="Booking" component={Booking} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-function App() {
-  return <CustomerStack />;
-  // <HomeStack />;
-  // <AuthStack />;
+function MainApp() {
+  const userData = useSelector((state) => state.user.userData);
+
+  return <>{userData ? <HomeStack /> : <AuthStack />}</>;
 }
 
-export default App;
+export default MainApp;

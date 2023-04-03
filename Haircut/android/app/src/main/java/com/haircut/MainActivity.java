@@ -1,4 +1,4 @@
-package com.haircut;
+package com.barberia;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
