@@ -8,9 +8,9 @@ import { persistor, store } from "./src/redux/store";
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-        <MainApp />
-      </PersistGate>
+      {/* <PersistGate loading={<ActivityIndicator />} persvistor={persistor}> */}
+      <MainApp />
+      {/* </PersistGate> */}
     </Provider>
   );
 };

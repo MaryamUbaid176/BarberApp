@@ -7,9 +7,9 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Text from "../../../components/CustomText";
 import CustomButton from "../../../components/CustomButton";
+import { Snackbar } from "react-native-paper";
 
-const Login = (props) => {
-  console.log("props::", props);
+const SignUp = (props) => {
   const [Email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   return (
@@ -101,12 +101,11 @@ const Login = (props) => {
             width: "90%",
             fontWeight: "bold",
           }}
-          title="Login"
+          title="SignUp"
           titleColor={{ color: "#FFF" }}
         />
       </View>
 
-      {/* tibb */}
       <View
         style={{
           height: hp(25),
@@ -134,7 +133,21 @@ const Login = (props) => {
         />
 
         <CustomButton
-          onPress={() => props.navigation.navigate("ForgotPassword")}
+          onPress={() => {
+            if (!Email) {
+              Snackbar.show({
+                text: "Please enter email ",
+                duration: Snackbar.LENGTH_SHORT,
+              });
+            } else if (!pass) {
+              Snackbar.show({
+                text: "Please enter password ",
+                duration: Snackbar.LENGTH_SHORT,
+              });
+            } else {
+            }
+            // props.navigation.navigate("ForgotPassword")
+          }}
           style={{
             marginBottom: hp(15),
 
@@ -155,7 +168,7 @@ const Login = (props) => {
     </KeyboardAwareScrollView>
   );
 };
-export default Login;
+export default SignUp;
 
 {
   /* <KeyboardAwareScrollView style={{ height: hp(100), borderBottomLeftRadius:hp(30) }} > */

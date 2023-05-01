@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {combineReducers} from '@reduxjs/toolkit';
-import {persistReducer} from 'redux-persist';
-import {apiHandler} from '../../services/service';
-import userReducer from './userSlice';
-import serviceReducer from './serviceSlice';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { combineReducers } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import { apiHandler } from "../../services/service";
+import userReducer from "./userSlice";
+import serviceReducer from "./serviceSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 });
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: AsyncStorage,
   // whitelist: ['user'],
   // timeout: null,
