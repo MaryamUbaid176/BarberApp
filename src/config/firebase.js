@@ -5,6 +5,7 @@ import { getAuth } from "@react-native-firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyCJ1uL0gUDu8x2_SOGpaZxM1mLI4owSXqY",
   authDomain: "barberiaapp-850d5.firebaseapp.com",
+  databaseURL: "https://barberiaapp-850d5-default-rtdb.firebaseio.com",
   projectId: "barberiaapp-850d5",
   storageBucket: "barberiaapp-850d5.appspot.com",
   messagingSenderId: "437817480128",

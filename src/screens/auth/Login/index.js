@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -8,137 +8,80 @@ import {
 import { useDispatch } from "react-redux";
 import CustomButton from "../../../components/CustomButton";
 import Text from "../../../components/CustomText";
+import Auth from "../../../firebaseHooks/auth";
+import styles from "./styles";
 import { setUser } from "../../../redux/slices/userSlice";
 
 const Login = (props) => {
   const dispatch = useDispatch();
+  const [errMessage, setErrMessage] = useState("");
+
+  const { handleLogin, isloading } = Auth();
+
+  // console.log("called", props.route.params);
+
+  //console.log("called in login up ", props.route.params);
   return (
-    <KeyboardAwareScrollView
-      style={{ height: hp(100), backgroundColor: "transparent" }}
-    >
+    <KeyboardAwareScrollView style={styles.mainContainer}>
       {/* first heading */}
-      <View
-        style={{
-          height: hp(30),
-          backgroundColor: "transparent",
-          justifyContent: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: hp(4),
-            color: "black",
-            textAlign: "center",
-            fontWeight: "bold",
-            fontFamily: "KolkerBrush-Regular",
-          }}
-        >
-          Welcome Back!
-        </Text>
+      <View style={styles.mainView}>
+        <Text style={styles.maintextone}>Welcome Back!</Text>
         {/* second heading */}
-        <Text
-          style={{
-            fontSize: wp(3),
-            marginTop: hp(2),
-            color: "grey",
-            textAlign: "center",
-            fontWeight: "200",
-            fontFamily: "KolkerBrush-Regular",
-          }}
-        >
-          Please enter your account here
-        </Text>
+        <Text style={styles.maintexttwo}>Please enter your account here</Text>
       </View>
+      <View style={styles.viewinput}>
+        <TextInput placeholder="Email" style={styles.textinput} />
+
+        <TextInput placeholder="Password" style={styles.textinput} />
+      </View>
+
+      <CustomButton
+        onPress={() => props.navigation.navigate("ForgotPassword")}
+        style={styles.forgetView}
+        title="Forget Password?"
+        titleColor={{ color: "black" }}
+      />
+
       <View style={{ height: hp(20), backgroundColor: "transparent" }}>
-        <TextInput
-          placeholder="Email"
-          style={{
-            borderRadius: 20,
-            borderWidth: 0.5,
-            alignSelf: "center",
-            marginTop: 12,
-            width: "90%",
-          }}
-        />
-
-        <TextInput
-          placeholder="Password"
-          style={{
-            borderWidth: 0.5,
-            borderRadius: 20,
-            alignSelf: "center",
-            marginTop: 20,
-            width: "90%",
-          }}
-        />
-      </View>
-
-      <View style={{ height: hp(15), backgroundColor: "transparent" }}>
-        <CustomButton
-          onPress={() => props.navigation.navigate("ForgotPassword")}
-          style={{
-            backgroundColor: "transparent",
-            width: wp(50),
-            height: hp(4),
-            fontSize: hp(5),
-            fontWeight: "bold",
-            marginLeft: hp(25),
-          }}
-          title="Forget Password?"
-          titleColor={{ color: "black" }}
-        />
-      </View>
-
-      <View style={{ height: wp(10), backgroundColor: "transparent" }}>
+        <Text style={{ color: "red" }}>{errMessage}</Text>
         <CustomButton
           onPress={() => {
-            let data = {
-              email: "nasr@gmail",
-              name: "Nasr",
-              userId: 123,
-            };
+            // let data = {
+            //   email: "nasr@gmail",
+            //   name: "Nasr",
+            //   userId: 123,
+            // };
 
-            dispatch(setUser(data));
+            // dispatch(setUser(data));
+
+            // handleLogin(Email, pass, (error) => {
+            handleLogin("nasr@gmail.com", "Test123#", (error) => {
+              if (error) {
+                console.log("error:::::: ", error);
+                if (error.code === "auth/user-not-found") {
+                  setErrMessage("No user found with this email");
+                }
+                if (error.code === "auth/wrong-password") {
+                  setErrMessage("Email or password is incorrent");
+                }
+                if (error.code === "auth/invalid-email") {
+                  setErrMessage("That email address is invalid!");
+                }
+              } else {
+                console.log("res...>> ", res);
+              }
+            });
           }}
-          style={{
-            borderRadius: 20,
-            backgroundColor: "#2AAA8A",
-            alignSelf: "center",
-            marginTop: 20,
-            width: "90%",
-            fontWeight: "bold",
-          }}
+          style={styles.btn}
           title="Login"
-          titleColor={{ color: "#FFF" }}
         />
       </View>
 
       {/* tibb */}
-      <View
-        style={{
-          marginTop: hp(5),
-          height: hp(8),
-          width: wp("80%"),
-          flexDirection: "row",
-          backgroundColor: "transparent",
-          alignItems: "center",
-          marginLeft: "10%",
-          justifyContent: "center",
-        }}
-      >
+      <View style={styles.donthaveaccountView}>
         <CustomButton
           onPress={() => props.navigation.navigate("ForgotPassword")}
-          style={{
-            width: wp(55),
-            marginTop: wp(25),
-            marginBottom: hp(15),
-            fontWeight: "bold",
-            justifyContent: "center",
-            alignItems: "center",
-            height: hp(7),
-            alignSelf: "center",
-            backgroundColor: "transparent",
-          }}
+          style={styles.btnone}
           title="Don't have an account?"
           titleColor={{ color: "black" }}
         />
@@ -149,18 +92,7 @@ const Login = (props) => {
               type: props?.route?.params?.type,
             })
           }
-          style={{
-            marginBottom: hp(5),
-
-            width: wp(20),
-            marginTop: wp(8),
-            borderRadius: wp(2),
-            justifyContent: "center",
-            alignItems: "center",
-            height: hp(7),
-            alignSelf: "center",
-            backgroundColor: "transparent",
-          }}
+          style={styles.btntwo}
           title="Signup"
           titleColor={{ color: "#2AAA8A" }}
         />

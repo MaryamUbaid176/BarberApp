@@ -4,7 +4,8 @@
 // import {NavigationContainer} from '@react-navigation/native';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import SelectUser from './screens/auth/UserType/SelectUser';
-import { Provider, useSelector } from "react-redux";
+import auth, { firebase } from "@react-native-firebase/auth";
+import { useSelector } from "react-redux";
 import Login from "./screens/auth/Login";
 
 // // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -14,7 +15,6 @@ import SplashScreen from "./screens/auth/SplashScreen";
 import SelectUser from "./screens/auth/UserType/SelectUser";
 import Home from "./screens/dashboard/Home";
 
-import { store } from "./Redux/store";
 // import Profile from "./screens/dashboard/Profile";
 
 // const Stack = createNativeStackNavigator();
@@ -106,10 +106,12 @@ import { store } from "./Redux/store";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import Booking from "./screens/Customer/Booking";
 import Account from "./screens/dashboard/Account";
 import Mystore from "./screens/dashboard/My store";
 import AddProduct from "./screens/dashboard/My store/AddProduct";
+import firebaseConfig from "./config/firebase";
 
 const Stack = createNativeStackNavigator();
 const AuthStack = () => {
@@ -170,7 +172,18 @@ const CustomerStack = () => {
 
 function MainApp() {
   const userData = useSelector((state) => state.user.userData);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
 
+  useEffect(() => {
+    firebase.initializeApp(firebaseConfig);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
   return <>{userData ? <HomeStack /> : <AuthStack />}</>;
 }
 

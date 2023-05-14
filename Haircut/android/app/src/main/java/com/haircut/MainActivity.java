@@ -1,4 +1,4 @@
-package com.barberia;
+package com.myBarberia;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

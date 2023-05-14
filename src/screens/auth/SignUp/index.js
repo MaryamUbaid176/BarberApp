@@ -1,137 +1,58 @@
 import React, { useState } from "react";
-import { View, TextInput } from "react-native";
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from "react-native-responsive-screen";
+import { TextInput, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Text from "../../../components/CustomText";
 import CustomButton from "../../../components/CustomButton";
-import { Snackbar } from "react-native-paper";
+import Text from "../../../components/CustomText";
+
+import Snackbar from "react-native-snackbar";
+import Auth from "../../../firebaseHooks/auth";
+import styles from "./styles";
+import { hp, wp } from "../../../util";
 
 const SignUp = (props) => {
-  const [Email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  return (
-    <KeyboardAwareScrollView
-      style={{ height: hp(100), backgroundColor: "transparent" }}
-    >
-      <View
-        style={{
-          height: hp(40),
-          backgroundColor: "transparent",
-          justifyContent: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: hp(4),
-            color: "black",
-            textAlign: "center",
-            fontWeight: "bold",
-            fontFamily: "KolkerBrush-Regular",
-          }}
-        >
-          Welcome Back!
-        </Text>
+  const [Email, setEmail] = useState("nasr@gmail.com");
+  const [pass, setPass] = useState("Test123#");
+  const [Name, setName] = useState("Nasr");
+  const [PhoneNo, setPhoneNo] = useState("1234567");
 
-        <Text
-          style={{
-            fontSize: wp(3),
-            marginTop: hp(2),
-            color: "grey",
-            textAlign: "center",
-            fontWeight: "200",
-            fontFamily: "KolkerBrush-Regular",
-          }}
-        >
-          Please enter your account here
-        </Text>
+  const [errMessage, setErrMessage] = useState("");
+  const { handleSignup, isloading } = Auth();
+  //console.log("calledddd", types);
+  console.log("called in login up ", props.route.params);
+  return (
+    <KeyboardAwareScrollView style={styles.mainContainer}>
+      <View style={styles.mainView}>
+        <Text style={styles.maintextone}>Welcome Back!</Text>
+
+        <Text style={styles.maintexttwo}>Please create your account here</Text>
       </View>
-      <View style={{ height: hp(20), backgroundColor: "transparent" }}>
+      <View style={{ backgroundColor: "transparent" }}>
         <TextInput
           placeholder="Email"
           onChangeText={(e) => setEmail(e)}
-          style={{
-            borderRadius: 20,
-            borderWidth: 0.5,
-            alignSelf: "center",
-            marginTop: 12,
-            width: "90%",
-          }}
+          style={styles.textinput}
         />
 
         <TextInput
           placeholder="Password"
           onChangeText={(e) => setPass(e)}
-          style={{
-            borderWidth: 0.5,
-            borderRadius: 20,
-            alignSelf: "center",
-            marginTop: 20,
-            width: "90%",
-          }}
+          style={styles.textinput}
+        />
+
+        <TextInput
+          placeholder="Enter Name"
+          onChangeText={(e) => setName(e)}
+          style={styles.textinput}
+        />
+
+        <TextInput
+          placeholder="Phone No"
+          onChangeText={(e) => setPhoneNo(e)}
+          style={styles.textinput}
         />
       </View>
 
-      <View style={{ height: hp(5), backgroundColor: "transparent" }}>
-        <CustomButton
-          onPress={() => props.navigation.navigate("ForgotPassword")}
-          style={{
-            backgroundColor: "transparent",
-            width: wp(50),
-            height: hp(5),
-            fontSize: hp(5),
-            fontWeight: "bold",
-            marginLeft: hp(25),
-          }}
-          title="Forget Password?"
-          titleColor={{ color: "black" }}
-        />
-      </View>
-
-      <View style={{ height: hp(10), backgroundColor: "transparent" }}>
-        <CustomButton
-          onPress={() => props.navigation.navigate("ForgotPassword")}
-          style={{
-            borderRadius: 20,
-            backgroundColor: "#2AAA8A",
-            alignSelf: "center",
-            marginTop: 20,
-            width: "90%",
-            fontWeight: "bold",
-          }}
-          title="SignUp"
-          titleColor={{ color: "#FFF" }}
-        />
-      </View>
-
-      <View
-        style={{
-          height: hp(25),
-          flexDirection: "row",
-          backgroundColor: "transparent",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CustomButton
-          onPress={() => props.navigation.navigate("ForgotPassword")}
-          style={{
-            width: wp(55),
-            marginTop: wp(45),
-            marginBottom: hp(15),
-            fontWeight: "bold",
-            justifyContent: "center",
-            alignItems: "center",
-            height: hp(7),
-            alignSelf: "center",
-            backgroundColor: "transparent",
-          }}
-          title="Don't have an account?"
-          titleColor={{ color: "black" }}
-        />
-
+      <View style={{ backgroundColor: "transparent" }}>
         <CustomButton
           onPress={() => {
             if (!Email) {
@@ -144,23 +65,69 @@ const SignUp = (props) => {
                 text: "Please enter password ",
                 duration: Snackbar.LENGTH_SHORT,
               });
+            } else if (!Name) {
+              Snackbar.show({
+                text: "Please enter Name ",
+                duration: Snackbar.LENGTH_SHORT,
+              });
+            } else if (!PhoneNo) {
+              Snackbar.show({
+                text: "Please enter PhoneNo",
+                duration: Snackbar.LENGTH_SHORT,
+              });
             } else {
+              handleSignup(
+                Email,
+                pass,
+                Name,
+                PhoneNo,
+                props.route.params.type,
+                (error) => {
+                  if (error) {
+                    console.log("error:::::: ", error);
+                    if (error.code === "auth/email-already-in-use") {
+                      setErrMessage("Email address is already in use!");
+                    }
+                    if (error.code === "auth/invalid-email") {
+                      setErrMessage("That email address is invalid!");
+                    }
+                  }
+                }
+              );
             }
             // props.navigation.navigate("ForgotPassword")
           }}
-          style={{
-            marginBottom: hp(15),
+          style={styles.btn}
+          loading={isloading}
+          title="SignUp"
+          titleColor={{ color: "#FFF" }}
+        />
+      </View>
 
-            width: wp(20),
-            marginTop: wp(45),
-            borderRadius: wp(2),
-            justifyContent: "center",
-            alignItems: "center",
-            height: hp(7),
-            alignSelf: "center",
-            backgroundColor: "transparent",
+      <Text
+        style={{
+          color: "red",
+          marginLeft: hp(5),
+          fontSize: hp(2),
+        }}
+      >
+        {errMessage}
+      </Text>
+      <View style={styles.donthaveaccountView}>
+        <CustomButton
+          // onPress={() => props.navigation.navigate("SignUp")}
+          style={styles.btnone}
+          title="Don't have an account?"
+          titleColor={{ color: "black" }}
+        />
+
+        <CustomButton
+          onPress={() => {
+            props.navigation.goBack();
           }}
-          title="Signup"
+          style={styles.btntwo}
+          title="Sign In"
+          // onPress={() => props.navigation.navigate("SignUp")}
           titleColor={{ color: "#2AAA8A" }}
         />
       </View>
