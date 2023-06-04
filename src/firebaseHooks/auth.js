@@ -30,14 +30,14 @@ const Auth = () => {
           name: "",
           userId: res.user.uid,
         };
+        console.log("data", JSON.stringify(data));
 
         firestore()
           .collection("Users")
           .doc(res.user.uid)
           .onSnapshot(async (documentSnapshot) => {
-            if (documentSnapshot.data()) {
-              console.log("documentSnapshot.data()", documentSnapshot.data());
-
+            console.log("documentSnapshot.data()", documentSnapshot);
+            if (documentSnapshot?.data()) {
               let data = {
                 email: documentSnapshot?.data().email,
                 name: documentSnapshot?.data().name,
@@ -212,6 +212,16 @@ const Auth = () => {
         }
       });
   };
+  const getAllServices = async (callbackFunction) => {
+    firestore()
+      .collection("Services")
+      .doc("serviceList")
+      .onSnapshot(async (documentSnapshot) => {
+        if (documentSnapshot.data()) {
+          callbackFunction(documentSnapshot.data());
+        }
+      });
+  };
 
   return {
     handleLogin,
@@ -221,6 +231,7 @@ const Auth = () => {
     updateProfile,
     updatePasscode,
     getUser,
+    getAllServices,
     //
     isloading,
     errMessage,

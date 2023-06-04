@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CustomButton from "../../../components/CustomButton";
@@ -14,9 +14,14 @@ const SignUp = (props) => {
   const [pass, setPass] = useState("Test123#");
   const [Name, setName] = useState("Nasr");
   const [PhoneNo, setPhoneNo] = useState("1234567");
-
   const [errMessage, setErrMessage] = useState("");
-  const { handleSignup, isloading } = Auth();
+  const { handleSignup, getAllServices, isloading } = Auth();
+
+  useEffect(() => {
+    getAllServices((services) => {
+      console.log("services", services.item);
+    });
+  }, []);
 
   console.log("called in SignUp page up ", props.route.params);
   return (
