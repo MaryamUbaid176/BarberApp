@@ -14,6 +14,7 @@ import SignUp from "./screens/auth/SignUp";
 import SplashScreen from "./screens/auth/SplashScreen";
 import SelectUser from "./screens/auth/UserType/SelectUser";
 import Home from "./screens/dashboard/Home";
+import BarberHome from "./screens/dashboard/BarberHome";
 
 // import Profile from "./screens/dashboard/Profile";
 
@@ -108,7 +109,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import Booking from "./screens/Customer/Booking";
-import Account from "./screens/dashboard/Account";
+import Account from "./screens/dashboard/BarberHome/Account";
 import Mystore from "./screens/dashboard/My store";
 import AddProduct from "./screens/dashboard/My store/AddProduct";
 import firebaseConfig from "./config/firebase";
@@ -128,32 +129,31 @@ const AuthStack = () => {
   );
 };
 const HomeStack = () => {
+  const userData = useSelector((state) => state.user.userData);
+  console.log("userData", userData?.type);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator initialRouteName="">
+        {userData?.type == "user" ? (
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <Stack.Screen
+            name="BarberHome"
+            component={BarberHome}
+            options={{ headerShown: false }}
+          />
+        )}
 
-        <Stack.Screen
-          name="Account"
-          component={Account}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="Mystore"
-          component={Mystore}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
+        {/* <Stack.Screen
           name="AddProduct"
           component={AddProduct}
           options={{ headerShown: false }}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

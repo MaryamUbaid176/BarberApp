@@ -17,8 +17,8 @@ const SignUp = (props) => {
 
   const [errMessage, setErrMessage] = useState("");
   const { handleSignup, isloading } = Auth();
-  //console.log("calledddd", types);
-  console.log("called in login up ", props.route.params);
+
+  console.log("called in SignUp page up ", props.route.params);
   return (
     <KeyboardAwareScrollView style={styles.mainContainer}>
       <View style={styles.mainView}>

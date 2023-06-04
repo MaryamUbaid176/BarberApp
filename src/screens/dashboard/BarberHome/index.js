@@ -1,12 +1,13 @@
 import { View, Text, Button } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Account from "../BarberHome/Account";
+import Account from "./Account";
 import Setting from "../Setting";
 import Mystore from "../My store";
 import AddProduct from "../My store/AddProduct";
+import Profile from "./Profile";
 
-const Home = () => {
+const BarberHome = () => {
   const Tab = createBottomTabNavigator();
 
   return (
@@ -23,6 +24,11 @@ const Home = () => {
       /> */}
       <Tab.Screen
         name="Mystore"
+        options={{ headerShown: false }}
+        component={Mystore}
+      />
+      <Tab.Screen
+        name="Profile"
         options={{ headerShown: false }}
         component={Mystore}
       />
@@ -51,4 +57,4 @@ const Home = () => {
 //     );
 //   }
 
-export default Home;
+export default BarberHome;

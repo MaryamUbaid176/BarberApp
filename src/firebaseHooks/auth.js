@@ -24,13 +24,34 @@ const Auth = () => {
     auth()
       .signInWithEmailAndPassword(phone, password)
       .then((res) => {
+        console.log("res", res);
         let data = {
           email: res.user.providerData[0].email,
           name: "",
           userId: res.user.uid,
         };
 
-        dispatch(setUser(data));
+        firestore()
+          .collection("Users")
+          .doc(res.user.uid)
+          .onSnapshot(async (documentSnapshot) => {
+            if (documentSnapshot.data()) {
+              console.log("documentSnapshot.data()", documentSnapshot.data());
+
+              let data = {
+                email: documentSnapshot?.data().email,
+                name: documentSnapshot?.data().name,
+                type: documentSnapshot?.data().type,
+                phone: documentSnapshot?.data().phone,
+                userId: res.user.uid,
+              };
+              dispatch(setUser(data));
+
+              // callbackFunction(documentSnapshot.data());
+            }
+          });
+
+        // dispatch(setUser(data));
       })
       .catch((error) => {
         callbackFunction(error);

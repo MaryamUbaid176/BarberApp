@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   maintextone: {
-    fontSize: hp(5),
+    fontSize: hp(6),
     height: hp(10),
     color: "black",
     textAlign: "center",
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontFamily: "KolkerBrush-Regular",
   },
   maintexttwo: {
-    fontSize: wp(3),
+    fontSize: wp(4),
     height: hp(10),
     color: "grey",
     textAlign: "center",
@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
   inputview: { height: hp(20), backgroundColor: "transparent" },
   textinput: {
     height: hp(10),
-    borderRadius: hp(1),
+    borderRadius: hp(2),
     borderWidth: 0.4,
     alignSelf: "center",
     marginTop: hp(2),
     width: "90%",
+    padding: hp(2),
   },
 
   forgetView: {

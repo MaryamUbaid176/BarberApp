@@ -10,7 +10,7 @@ import moment from "moment";
 const Account = () => {
   const data = [
     {
-      name: "Ahmed",
+      name: "Ahmedd",
       serviceType: ["Cutting", "Shave"],
       date: "23 Jan 2023",
       price: 1000,
@@ -22,7 +22,7 @@ const Account = () => {
       price: 1000,
     },
     {
-      name: "Zain",
+      name: "Zainab",
       serviceType: ["Cutting"],
       date: "22 Jan 2023",
       price: 1000,
@@ -63,7 +63,6 @@ const Account = () => {
           data={data}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => {
-            console.log("item", item);
             return (
               <View style={styles.mainContainer}>
                 <Text>{item.name}</Text>

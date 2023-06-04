@@ -10,7 +10,7 @@ import CustomButton from "../../../components/CustomButton";
 import Text from "../../../components/CustomText";
 import Auth from "../../../firebaseHooks/auth";
 import styles from "./styles";
-import { setUser } from "../../../redux/slices/userSlice";
+import userSlice, { setUser } from "../../../redux/slices/userSlice";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Login = (props) => {
 
   const { handleLogin, isloading } = Auth();
 
-  // console.log("called", props.route.params);
+  console.log("called", props.route.params);
 
   //console.log("called in login up ", props.route.params);
   return (
@@ -41,6 +41,12 @@ const Login = (props) => {
         title="Forget Password?"
         titleColor={{ color: "black" }}
       />
+      {/* //////// */}
+      {/* <CustomButton
+        onPress={() => {
+          navigation.navigate("ForgetPassword", { type: "user" });
+        }}
+      /> */}
 
       <View style={{ height: hp(20), backgroundColor: "transparent" }}>
         <Text style={{ color: "red" }}>{errMessage}</Text>
@@ -97,6 +103,7 @@ const Login = (props) => {
           titleColor={{ color: "#2AAA8A" }}
         />
       </View>
+
       {/* end */}
     </KeyboardAwareScrollView>
   );

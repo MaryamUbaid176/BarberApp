@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   maintextone: {
-    fontSize: hp(5),
+    fontSize: hp(6),
     height: hp(10),
     color: "black",
     textAlign: "center",
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontFamily: "KolkerBrush-Regular",
   },
   maintexttwo: {
-    fontSize: wp(3),
+    fontSize: wp(4),
     height: hp(5),
     color: "grey",
     textAlign: "center",
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: hp(2),
     width: "90%",
+    padding: hp(2),
   },
 
   btn: {
