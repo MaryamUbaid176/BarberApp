@@ -8,22 +8,31 @@ import Snackbar from "react-native-snackbar";
 import Auth from "../../../firebaseHooks/auth";
 import styles from "./styles";
 import { hp, wp } from "../../../util";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const SignUp = (props) => {
   const [Email, setEmail] = useState("nasr@gmail.com");
   const [pass, setPass] = useState("Test123#");
   const [Name, setName] = useState("Nasr");
   const [PhoneNo, setPhoneNo] = useState("1234567");
+  // const [ShopName, setShopName] = useState("almirahh");
   const [errMessage, setErrMessage] = useState("");
   const { handleSignup, getAllServices, isloading } = Auth();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState([]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     getAllServices((services) => {
-      console.log("services", services.item);
+      let temp = [];
+      services.item.map((item) => {
+        let data = { label: item, value: item };
+        temp.push(data);
+      });
+      setItems(temp);
     });
   }, []);
 
-  console.log("called in SignUp page up ", props.route.params);
   return (
     <KeyboardAwareScrollView style={styles.mainContainer}>
       <View style={styles.mainView}>
@@ -55,8 +64,27 @@ const SignUp = (props) => {
           onChangeText={(e) => setPhoneNo(e)}
           style={styles.textinput}
         />
+        {/* <TextInput
+          placeholder="Shop Name"
+          onChangeText={(e) => setShopName(e)}
+          style={styles.textinput}
+        /> */}
       </View>
-
+      {props.route.params.type == "barber" && (
+        <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+          theme="DARK"
+          multiple={true}
+          mode="BADGE"
+          containerStyle={{ width: wp(90), alignSelf: "center" }}
+          style={styles.DropDownPicker}
+        />
+      )}
       <View style={{ backgroundColor: "transparent" }}>
         <CustomButton
           onPress={() => {
@@ -80,13 +108,21 @@ const SignUp = (props) => {
                 text: "Please enter PhoneNo",
                 duration: Snackbar.LENGTH_SHORT,
               });
+              // } else if (!ShopName) {
+              //   Snackbar.show({
+              //     text: "Please enter PhoneNo",
+              //     duration: Snackbar.LENGTH_SHORT,
+              //   });
             } else {
+              let services = value;
               handleSignup(
                 Email,
                 pass,
                 Name,
                 PhoneNo,
+                // ShopName,
                 props.route.params.type,
+                services,
                 (error) => {
                   if (error) {
                     console.log("error:::::: ", error);
@@ -141,103 +177,3 @@ const SignUp = (props) => {
   );
 };
 export default SignUp;
-
-{
-  /* <KeyboardAwareScrollView style={{ height: hp(100), borderBottomLeftRadius:hp(30) }} > */
-}
-
-{
-  /* first logo */
-}
-{
-  /* <View style={{ height: hp(25), backgroundColor: 'rgba(0,0,0,0.05)', alignItems: 'center', justifyContent: 'center' }}>
-
-    <LottieView
-        style={{ height: wp(60), width: wp(60) }}
-        source={require('../Assets/lottie/122850-office-chair.json')}
-        autoPlay
-        loop={false}
-    />
-
-</View > */
-}
-
-{
-  /* <View style={{ height: hp(10), backgroundColor: '#425747', justifyContent:'center',borderTopRightRadius:hp(5),borderTopLeftRadius:hp(5)}}>
-    <Text style={{ fontSize: 25, color: 'white', textAlign: 'center', fontWeight: 'bold', fontFamily: 'KolkerBrush-Regular' }}>SIGN IN</Text>
-</View>
-<View style={{ height: hp(45), backgroundColor: '#425747',borderBottomLeftRadius:hp(5),borderBottomRightRadius:hp(5) }}>
-
-
-
-<TextInput placeholder='Enter email'
-
-style={{ borderRadius: 6, backgroundColor: 'lightgrey', alignSelf: 'center', 
-marginTop: 12, width: '90%' }} />
-
-
-  
-    <TextInput 
-    placeholder='Enter Password'
-    style={{
-
-        borderRadius: 6, backgroundColor: 'lightgrey', alignSelf: 'center', marginTop: 20, width: '90%'
-    }} />
-
-    <TouchableOpacity
-        style={{ marginLeft: 20, borderRadius: 10, backgroundColor: 'grey', marginTop: 20, color: 'black', height: hp(8), width: '90%', alignItems: 'center', justifyContent: 'center' }} >
-        <Text style={{ color: 'white' }}>SIGN IN</Text>
-    </TouchableOpacity>
-
-
-    <View style={{ height: hp(20), flexDirection:'row',backgroundColor: 'rgba(0,0,0,0.05)', alignItems: 'center', justifyContent: 'center' }}>
-  
-    
-       <CustomButton
-         onPress={()=>props.navigation.navigate('ForgotPassword')}
- 
-         style={{
-        
-          
-            width: wp(60),
-            marginTop: wp(5),
-            marginBottom:hp(15),
-            borderRadius: wp(2),
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: hp(7),
-            alignSelf:'center',
-            backgroundColor:'transparent'
-        
-            
-        }}
-        title="create an account"
-        titleColor={{ color: "#FFF" }}
-    />
-
-    <CustomButton
-     onPress={()=>props.navigation.navigate('ForgotPassword')}
-         style={{
-            marginBottom:hp(15),
-           
-            width: wp(50),
-            marginTop: wp(5),
-            borderRadius: wp(2),
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: hp(7),
-            alignSelf:'center',
-            backgroundColor:'transparent'
-        }}
-        title="forget password!"
-        titleColor={{ color: "#FFF" }}
-    />
-        </View>
- 
-
-</View>
-
-
-</KeyboardAwareScrollView >
- */
-}

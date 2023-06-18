@@ -1,5 +1,5 @@
 import { View, Text, Button, StyleSheet, FlatList } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   heightPercentageToDP as hp,
@@ -7,11 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import moment from "moment";
 
-const Account = (props) => {
-  useEffect(() => {
-    props.navigation.navigate("UpdateTimings");
-  }, []);
-
+const Account = () => {
   const data = [
     {
       name: "Ahmedd",

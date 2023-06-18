@@ -1,7 +1,8 @@
 import auth, { firebase } from "@react-native-firebase/auth";
 import { useSelector } from "react-redux";
-import ForgotPassword from "./screens/auth/ForgotPassword";
 import Login from "./screens/auth/Login";
+
+import ForgotPassword from "./screens/auth/ForgotPassword";
 import SignUp from "./screens/auth/SignUp";
 import SplashScreen from "./screens/auth/SplashScreen";
 import SelectUser from "./screens/auth/UserType/SelectUser";
@@ -14,7 +15,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import firebaseConfig from "./config/firebase";
 import Booking from "./screens/Customer/Booking";
-import UpdateTimings from "./screens/dashboard/UpdateTimings";
 
 const Stack = createNativeStackNavigator();
 const AuthStack = () => {
@@ -51,11 +51,11 @@ const HomeStack = () => {
           />
         )}
 
-        <Stack.Screen
-          name="UpdateTimings"
-          component={UpdateTimings}
+        {/* <Stack.Screen
+          name="AddProduct"
+          component={AddProduct}
           options={{ headerShown: false }}
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -82,9 +82,7 @@ function MainApp() {
   }
 
   useEffect(() => {
-    if (!initializing) {
-      firebase.initializeApp(firebaseConfig);
-    }
+    firebase.initializeApp(firebaseConfig);
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);

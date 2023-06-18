@@ -78,6 +78,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     marginTop: hp(8),
   },
+  DropDownPicker: {
+    height: hp(8),
+    borderRadius: hp(1),
+    borderWidth: 0.4,
+    alignSelf: "center",
+    marginTop: hp(2),
+    width: wp(90),
+    backgroundColor: "transparent",
+    // padding: hp(2),
+  },
 });
 
 export default styles;

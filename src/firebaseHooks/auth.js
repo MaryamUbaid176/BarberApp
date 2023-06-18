@@ -30,14 +30,14 @@ const Auth = () => {
           name: "",
           userId: res.user.uid,
         };
-        console.log("data", JSON.stringify(data));
 
         firestore()
           .collection("Users")
           .doc(res.user.uid)
           .onSnapshot(async (documentSnapshot) => {
-            console.log("documentSnapshot.data()", documentSnapshot);
-            if (documentSnapshot?.data()) {
+            if (documentSnapshot.data()) {
+              console.log("documentSnapshot.data()", documentSnapshot.data());
+
               let data = {
                 email: documentSnapshot?.data().email,
                 name: documentSnapshot?.data().name,
