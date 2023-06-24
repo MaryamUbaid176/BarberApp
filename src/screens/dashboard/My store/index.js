@@ -11,10 +11,12 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../../redux/slices/userSlice";
 const Mystore = ({ navigation }) => {
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
+
   return (
     <View style={{ height: hp(100), backgroundColor: "tranparent" }}>
       <View style={styles.headerView}>
@@ -23,8 +25,8 @@ const Mystore = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <View style={styles.imgView} />
 
-        <Text style={styles.titleText}>Maryam</Text>
-        <Text style={styles.titleText}>Maryam@gmail.com</Text>
+        <Text style={styles.titleText}>{userData?.name}</Text>
+        <Text style={styles.titleText}>{userData?.email}</Text>
       </View>
 
       <TouchableOpacity

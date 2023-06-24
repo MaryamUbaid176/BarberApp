@@ -15,9 +15,9 @@ import userSlice, { setUser } from "../../../redux/slices/userSlice";
 const Login = (props) => {
   const dispatch = useDispatch();
   const [errMessage, setErrMessage] = useState("");
-
+  const [Email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { handleLogin, isloading } = Auth();
-
   console.log("called", props.route.params);
 
   //console.log("called in login up ", props.route.params);
@@ -30,9 +30,19 @@ const Login = (props) => {
         <Text style={styles.maintexttwo}>Please enter your account here</Text>
       </View>
       <View style={styles.viewinput}>
-        <TextInput placeholder="Email" style={styles.textinput} />
+        <TextInput
+          value={Email}
+          onChangeText={(value) => setEmail(value)}
+          placeholder="Email"
+          style={styles.textinput}
+        />
 
-        <TextInput placeholder="Password" style={styles.textinput} />
+        <TextInput
+          value={password}
+          onChangeText={(value) => setPassword(value)}
+          placeholder="Password"
+          style={styles.textinput}
+        />
       </View>
 
       <CustomButton
@@ -60,8 +70,8 @@ const Login = (props) => {
 
             // dispatch(setUser(data));
 
-            // handleLogin(Email, pass, (error) => {
-            handleLogin("nasr@gmail.com", "Test123#", (error) => {
+            handleLogin(Email, password, (error) => {
+              // handleLogin("nasr@gmail.com", "Test123#", (error) => {
               if (error) {
                 console.log("error:::::: ", error);
                 if (error.code === "auth/user-not-found") {

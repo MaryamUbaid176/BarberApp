@@ -1,7 +1,7 @@
 import { View, Text, Button } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Account from "../BarberHome/Account";
+import BarberList from "../BarberHome/BarberList";
 import Setting from "../Setting";
 import Mystore from "../My store";
 import AddProduct from "../My store/AddProduct";
@@ -12,9 +12,9 @@ const Home = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="Account"
+        name="BarberList"
         options={{ headerShown: false }}
-        component={Account}
+        component={BarberList}
       />
       {/* <Tab.Screen
         name="Setting"
@@ -22,7 +22,7 @@ const Home = () => {
         component={Setting}
       /> */}
       <Tab.Screen
-        name="Mystore"
+        name="Setting"
         options={{ headerShown: false }}
         component={Mystore}
       />

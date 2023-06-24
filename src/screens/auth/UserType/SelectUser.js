@@ -26,12 +26,12 @@ const SelectUser = ({ navigation }) => {
           BARBERIA
         </Text>
 
-        <LottieView
+        {/* <LottieView
           style={{ flex: 1 }}
           source={require("../../../Assets/lottie/88425-multiple-spinning-dotted-rings-loading.json")}
           autoPlay
           loop
-        />
+        /> */}
       </View>
 
       <View
@@ -74,7 +74,7 @@ const SelectUser = ({ navigation }) => {
             height: hp(7),
             alignSelf: "center",
           }}
-          title="As a  Barber"
+          title="As a Barber"
           titleColor={{ color: "#FFF" }}
         />
       </View>

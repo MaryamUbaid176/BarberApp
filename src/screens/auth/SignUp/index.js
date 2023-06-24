@@ -17,7 +17,8 @@ const SignUp = (props) => {
   const [PhoneNo, setPhoneNo] = useState("1234567");
   // const [ShopName, setShopName] = useState("almirahh");
   const [errMessage, setErrMessage] = useState("");
-  const { handleSignup, getAllServices, isloading } = Auth();
+  const { barberHandleSignup, handleSignup, getAllServices, isloading } =
+    Auth();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState([]);
   const [items, setItems] = useState([]);
@@ -108,33 +109,52 @@ const SignUp = (props) => {
                 text: "Please enter PhoneNo",
                 duration: Snackbar.LENGTH_SHORT,
               });
-              // } else if (!ShopName) {
-              //   Snackbar.show({
-              //     text: "Please enter PhoneNo",
-              //     duration: Snackbar.LENGTH_SHORT,
-              //   });
             } else {
-              let services = value;
-              handleSignup(
-                Email,
-                pass,
-                Name,
-                PhoneNo,
-                // ShopName,
-                props.route.params.type,
-                services,
-                (error) => {
-                  if (error) {
-                    console.log("error:::::: ", error);
-                    if (error.code === "auth/email-already-in-use") {
-                      setErrMessage("Email address is already in use!");
-                    }
-                    if (error.code === "auth/invalid-email") {
-                      setErrMessage("That email address is invalid!");
+              if (props.route.params.type == "user") {
+                let services = value;
+                handleSignup(
+                  Email,
+                  pass,
+                  Name,
+                  PhoneNo,
+                  // ShopName,
+                  props.route.params.type,
+
+                  (error) => {
+                    if (error) {
+                      console.log("error:::::: ", error);
+                      if (error.code === "auth/email-already-in-use") {
+                        setErrMessage("Email address is already in use!");
+                      }
+                      if (error.code === "auth/invalid-email") {
+                        setErrMessage("That email address is invalid!");
+                      }
                     }
                   }
-                }
-              );
+                );
+              } else {
+                let services = value;
+                barberHandleSignup(
+                  Email,
+                  pass,
+                  Name,
+                  PhoneNo,
+                  // ShopName,
+                  props.route.params.type,
+                  services,
+                  (error) => {
+                    if (error) {
+                      console.log("error:::::: ", error);
+                      if (error.code === "auth/email-already-in-use") {
+                        setErrMessage("Email address is already in use!");
+                      }
+                      if (error.code === "auth/invalid-email") {
+                        setErrMessage("That email address is invalid!");
+                      }
+                    }
+                  }
+                );
+              }
             }
             // props.navigation.navigate("ForgotPassword")
           }}

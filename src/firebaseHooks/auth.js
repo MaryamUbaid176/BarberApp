@@ -73,36 +73,6 @@ const Auth = () => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        // console.log("profileImage", profileImage);
-        // console.log("country", country);
-        // if (profileImage != null) {
-        //   let storagePath = "user/";
-        //   uploadImage(
-        //     profileImage,
-        //     storagePath,
-        //     (onSuccess) => {
-        //       if (onSuccess) {
-        //         let data = {
-        //           email: email.toLowerCase(),
-        //           name: fullname,
-        //           phone: number,
-        //           currency: currencyCode,
-        //           userId: res?.user?.uid,
-        //           profileImage: onSuccess,
-        //           country: country,
-        //           enablePasscode: false,
-        //           passcode: "",
-        //         };
-        //         dispatch(setUser(data));
-        //         firestore().collection("Users").doc(res?.user?.uid).set(data);
-        //         firebase.auth().currentUser.updateProfile(data);
-        //       }
-        //     },
-        //     (imgProgress) => {
-        //       console.log("imgProgress", imgProgress);
-        //     }
-        //   );
-        // } else {
         console.log("User account created & signed in! ", res);
         let data = {
           email: email,
@@ -111,10 +81,14 @@ const Auth = () => {
           type: type,
         };
         dispatch(setUser(data));
+        let data1 = {
+          email: email,
+          name: fullname,
+          phone: number,
+          type: type,
+        };
         firestore().collection("Users").doc(res?.user?.uid).set(data);
         firebase.auth().currentUser.updateProfile(data);
-        // verifyPhoneNumber(phone);
-        // }
       })
       .catch((error) => {
         callbackFunction(error);
@@ -122,6 +96,51 @@ const Auth = () => {
         console.error("error: ", error);
       });
   };
+  const barberHandleSignup = async (
+    email,
+    password,
+    fullname,
+    number,
+    type,
+    services,
+    callbackFunction
+  ) => {
+    setErrMessage("");
+    setIsLoading(true);
+
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((res) => {
+        console.log("User account created & signed in! ", res);
+        let data = {
+          email: email,
+          name: fullname,
+          phone: number,
+          type: type,
+          services: services,
+        };
+        dispatch(setUser(data));
+
+        firestore().collection("Users").doc(res?.user?.uid).set(data);
+        firebase.auth().currentUser.updateProfile(data);
+      })
+      .catch((error) => {
+        callbackFunction(error);
+        setIsLoading(false);
+        console.error("error: ", error);
+      });
+  };
+  const createrUserBooking = async (
+    booking,
+
+    callbackFunction
+  ) => {
+    setErrMessage("");
+    setIsLoading(true);
+
+    firestore().collection("bookings").doc(booking).set(data);
+  };
+
   async function verifyPhoneNumber(phoneNumber) {
     const confirmation = await auth().verifyPhoneNumber(phoneNumber);
     setConfirm(confirmation);
@@ -222,16 +241,36 @@ const Auth = () => {
         }
       });
   };
+  const getAllBarber = async (callbackFunction) => {
+    const data = [];
+    firestore()
+      .collection("Users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot?.docs?.forEach((doc) => {
+          console.log("doc", doc.data().type);
+          if (doc.data().type == "barber") {
+            data.push(doc.data());
+          }
+        });
+      })
+      .finally(() => {
+        callbackFunction(data);
+      });
+  };
 
   return {
     handleLogin,
     handleSignup,
+    barberHandleSignup,
+    createrUserBooking,
     handleForgotPassword,
     updateProfileImage,
     updateProfile,
     updatePasscode,
     getUser,
     getAllServices,
+    getAllBarber,
     //
     isloading,
     errMessage,
