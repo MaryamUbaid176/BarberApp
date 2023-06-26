@@ -111,13 +111,14 @@ const Auth = () => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log("User account created & signed in! ", res);
+        console.log("User account created & signed in! ", res?.user);
         let data = {
           email: email,
           name: fullname,
           phone: number,
           type: type,
           services: services,
+          userId: res?.user?.uid,
         };
         dispatch(setUser(data));
 
@@ -130,15 +131,67 @@ const Auth = () => {
         console.error("error: ", error);
       });
   };
-  const createrUserBooking = async (
-    booking,
-
-    callbackFunction
-  ) => {
+  const createrUserBooking = async (booking, callbackFunction) => {
     setErrMessage("");
     setIsLoading(true);
 
-    firestore().collection("bookings").doc(booking).set(data);
+    firestore()
+      .collection("userBookings")
+      .doc(userData.userId)
+      .get()
+      .then((documentSnapshot) => {
+        if (!documentSnapshot.exists) {
+          firestore()
+            .collection("userBookings")
+            .doc(userData.userId)
+            .set({
+              data: firestore.FieldValue.arrayUnion({ booking }),
+            });
+        } else {
+          firestore()
+            .collection("userBookings")
+            .doc(userData.userId)
+            .update({
+              data: firestore.FieldValue.arrayUnion({ booking }),
+            });
+        }
+        callbackFunction(true);
+      })
+
+      .catch((err) => {
+        console.log("something went wrong", err);
+      });
+  };
+  const createrBarberBooking = async (booking, resDone) => {
+    setErrMessage("");
+    setIsLoading(true);
+
+    firestore()
+      .collection("barberBookings")
+      .doc(userData.userId)
+      .get()
+      .then((documentSnapshot) => {
+        if (!documentSnapshot.exists) {
+          firestore()
+            .collection("barberBookings")
+            .doc(userData.userId)
+            .set({
+              data: firestore.FieldValue.arrayUnion({ booking }),
+            });
+        } else {
+          firestore()
+            .collection("barberBookings")
+            .doc(userData.userId)
+            .update({
+              data: firestore.FieldValue.arrayUnion({ booking }),
+            });
+        }
+        resDone(true);
+      })
+
+      .catch((err) => {
+        console.log("something went wrong", err);
+      });
   };
 
   async function verifyPhoneNumber(phoneNumber) {
@@ -258,12 +311,41 @@ const Auth = () => {
         callbackFunction(data);
       });
   };
+  const getUserAllBookings = async (callbackFunction) => {
+    const data = [];
+    firestore()
+      .collection("userbookings")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot?.docs?.forEach((doc) => {
+          data.push(doc.data());
+        });
+      })
+      .finally(() => {
+        callbackFunction(data);
+      });
+  };
+  const getBarberBookings = async (callbackFunction) => {
+    const data = [];
+    firestore()
+      .collection("Barberbookings")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot?.docs?.forEach((doc) => {
+          data.push(doc.data());
+        });
+      })
+      .finally(() => {
+        callbackFunction(data);
+      });
+  };
 
   return {
     handleLogin,
     handleSignup,
     barberHandleSignup,
     createrUserBooking,
+    createrBarberBooking,
     handleForgotPassword,
     updateProfileImage,
     updateProfile,
@@ -271,6 +353,8 @@ const Auth = () => {
     getUser,
     getAllServices,
     getAllBarber,
+    getUserAllBookings,
+    getBarberBookings,
     //
     isloading,
     errMessage,

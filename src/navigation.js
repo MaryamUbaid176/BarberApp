@@ -1,11 +1,11 @@
 import auth, { firebase } from "@react-native-firebase/auth";
 import { useSelector } from "react-redux";
-import Login from "./screens/auth/Login";
-
 import ForgotPassword from "./screens/auth/ForgotPassword";
+import Login from "./screens/auth/Login";
 import SignUp from "./screens/auth/SignUp";
 import SplashScreen from "./screens/auth/SplashScreen";
 import SelectUser from "./screens/auth/UserType/SelectUser";
+import BarberDetail from "./screens/dashboard/BarberDetail";
 import BarberHome from "./screens/dashboard/BarberHome";
 import Home from "./screens/dashboard/Home";
 
@@ -32,17 +32,23 @@ const AuthStack = () => {
 };
 const HomeStack = () => {
   const userData = useSelector((state) => state.user.userData);
-  console.log("userData", userData?.type);
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="">
         {userData?.type == "user" ? (
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="BarberDetail"
+              component={BarberDetail}
+              options={{ headerShown: false }}
+            />
+          </>
         ) : (
           <Stack.Screen
             name="BarberHome"
@@ -50,12 +56,6 @@ const HomeStack = () => {
             options={{ headerShown: false }}
           />
         )}
-
-        {/* <Stack.Screen
-          name="AddProduct"
-          component={AddProduct}
-          options={{ headerShown: false }}
-        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

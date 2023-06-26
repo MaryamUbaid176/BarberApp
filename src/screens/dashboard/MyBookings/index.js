@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
@@ -10,19 +11,22 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import Auth from "../../../../firebaseHooks/auth";
+import Auth from "../../../firebaseHooks/auth";
 
-const BarberList = (props) => {
-  // console.log(props.param.route.name, "called");
-  const { getAllBarber, isloading } = Auth();
+const MyBookings = () => {
+  const { getUserAllBookings, isloading } = Auth();
 
   const [barberList, setBarberList] = useState([]);
 
   useEffect(() => {
-    getAllBarber((data) => {
+    getUserAllBookings((data) => {
       setBarberList(data);
     });
   }, []);
+
+  useEffect(() => {
+    console.log("barberList", barberList);
+  }, [barberList]);
 
   return (
     <View style={styles.mainView}>
@@ -35,6 +39,7 @@ const BarberList = (props) => {
           data={barberList}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => {
+            console.log("item", item.date);
             return (
               <View style={styles.mainContainer}>
                 <TouchableOpacity
@@ -42,9 +47,8 @@ const BarberList = (props) => {
                     props.navigation.navigate("BarberDetail", { data: item });
                   }}
                 >
-                  <Text style={{ fontWeight: "bold", color: "black" }}>
-                    {item.name}
-                  </Text>
+                  <Text>Barber Name: {item?.barberName}</Text>
+                  <Text>Status: {item?.status}</Text>
 
                   <View
                     style={{
@@ -52,9 +56,9 @@ const BarberList = (props) => {
                       flexWrap: "wrap",
                     }}
                   >
-                    {item.services.map((item) => (
+                    {item?.services.map((item) => (
                       <View style={styles.serviceView}>
-                        <Text> {item}</Text>
+                        <Text>{item}</Text>
                       </View>
                     ))}
                   </View>
@@ -68,7 +72,7 @@ const BarberList = (props) => {
   );
 };
 
-export default BarberList;
+export default MyBookings;
 
 const styles = StyleSheet.create({
   mainView: {

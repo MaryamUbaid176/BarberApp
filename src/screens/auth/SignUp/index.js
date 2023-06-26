@@ -111,7 +111,6 @@ const SignUp = (props) => {
               });
             } else {
               if (props.route.params.type == "user") {
-                let services = value;
                 handleSignup(
                   Email,
                   pass,

@@ -10,10 +10,9 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import Auth from "../../../../firebaseHooks/auth";
+import Auth from "../../../firebaseHooks/auth";
 
-const BarberList = (props) => {
-  // console.log(props.param.route.name, "called");
+const AllBarbers = (props) => {
   const { getAllBarber, isloading } = Auth();
 
   const [barberList, setBarberList] = useState([]);
@@ -42,9 +41,7 @@ const BarberList = (props) => {
                     props.navigation.navigate("BarberDetail", { data: item });
                   }}
                 >
-                  <Text style={{ fontWeight: "bold", color: "black" }}>
-                    {item.name}
-                  </Text>
+                  <Text>{item.name}</Text>
 
                   <View
                     style={{
@@ -54,7 +51,7 @@ const BarberList = (props) => {
                   >
                     {item.services.map((item) => (
                       <View style={styles.serviceView}>
-                        <Text> {item}</Text>
+                        <Text>{item}</Text>
                       </View>
                     ))}
                   </View>
@@ -68,7 +65,7 @@ const BarberList = (props) => {
   );
 };
 
-export default BarberList;
+export default AllBarbers;
 
 const styles = StyleSheet.create({
   mainView: {
